@@ -1,40 +1,67 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
     public Woman WomanTransform;
     public Alien AlienTransform;
 
     public Transform FemaleSpawnPoint;
+    public Transform FemaleDespawnPoint;
 
     public float AlienChance;
     public int MaxFemales;
     public float SpawnCooldown;
 
-    private Female[] females;
+    private float spawnCooled;
+
+    private List<Female> females = new List<Female>();
 
 
     // Use this for initialization
     void Start () {
-        females = new Female[MaxFemales];
+        spawnCooled = SpawnCooldown;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (SpawnCooldown > 0 && females.Length < MaxFemales) {
-            SpawnCooldown--;
-        } else {
-            doSpawn();
-        }
+        doSpawning();
+        doDespawning();
 	}
 
-    void doSpawn() {
-        if (Random.value < AlienChance) {
-            Alien newAlien = Instantiate<Alien>((Alien)AlienTransform);
-            newAlien.transform.position = FemaleSpawnPoint.position;
+    void doSpawning() {
+        if (spawnCooled > 0 && females.Count < MaxFemales) {
+            spawnCooled--;
         } else {
-            Woman newWoman = Instantiate<Woman>((Woman)WomanTransform);
-            newWoman.transform.position = FemaleSpawnPoint.position;
+            if (females.Count < MaxFemales) {
+                spawnFemale();
+            }
+            spawnCooled = SpawnCooldown;
         }
+    }
+
+    void doDespawning() {
+        foreach (Female female in females) {
+            if (female.transform.position.x < FemaleDespawnPoint.position.x) {
+                despawnFemale(female);
+                break;
+            }
+        }
+    }
+
+    void spawnFemale() {
+        Female newFemale;
+        if (Random.value < AlienChance) {
+            newFemale = Instantiate<Alien>((Alien)AlienTransform);
+        } else {
+            newFemale = Instantiate<Woman>((Woman)WomanTransform);
+        }
+        newFemale.transform.position = FemaleSpawnPoint.position;
+        females.Add(newFemale);
+    }
+
+    void despawnFemale(Female female) {
+        females.Remove(female);
+        Destroy(female.gameObject);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Female : MonoBehaviour {
+public class Woman : Female {
 
 	// Use this for initialization
 	void Start () {
@@ -9,7 +9,8 @@ public class Female : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
-	}
+	protected override void Update () {
+        base.Update();
+
+    }
 }
