@@ -1,27 +1,27 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    float timeToPressButton;
+    bool needToPressButton = false;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    if (needToPressButton && Time.time > timeToPressButton) {
+            print("ded");
+        }
 	}
 
     void OnTriggerEnter2D(Collider2D other) {
         print("hit");
         if (other.gameObject.CompareTag("Mutant")) {
-            StartCoroutine(Dodge());
+            needToPressButton = true;
+            timeToPressButton = Time.time + 3;
         }
-    }
-
-    IEnumerator Dodge() {
-        yield return new WaitForSeconds(3f);
-        print("dead");
     }
 }
