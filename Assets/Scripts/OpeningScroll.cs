@@ -9,6 +9,8 @@ public class OpeningScroll : MonoBehaviour {
     float duration = 20f;
     Text words;
     string[] openingWords;
+    bool crawling = false;
+    public Text textToDisappear;
 
 	// Use this for initialization
 	void Start () {
@@ -20,13 +22,16 @@ public class OpeningScroll : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float elapsedTime = 0;
-
-        while (elapsedTime < duration) {
-            print(elapsedTime);
-            float t = elapsedTime / duration; //0 means the animation just started, 1 means it finished
-            position.anchoredPosition = Vector2.Lerp(start, end, t);
-            elapsedTime += Time.deltaTime;
+        if (Input.anyKeyDown) {
+            crawling = true;
+            textToDisappear.enabled = false;
+        }
+        print(crawling);
+        if (!crawling)
+            return;
+        position.Translate(Vector3.up * Time.deltaTime * 200);
+        if (position.position.y > 550) {
+            position.transform.position = start;
         }
     }
 }
