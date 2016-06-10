@@ -16,6 +16,7 @@ public class OpeningScroll : MonoBehaviour {
 	void Start () {
         position = GetComponent<RectTransform>();
         start = position.anchoredPosition;
+        print(start);
         end = new Vector2(start.x, Screen.height + 50);
         words = GetComponent<Text>();
     }
