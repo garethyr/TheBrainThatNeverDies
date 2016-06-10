@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class OpeningScroll : MonoBehaviour {
 
@@ -8,7 +9,8 @@ public class OpeningScroll : MonoBehaviour {
     Vector2 start, end;
     float duration = 20f;
     Text words;
-    string[] openingWords;
+    public string[] openingWords;
+    int index = 0;
     bool crawling = false;
     public Text textToDisappear;
 
@@ -19,6 +21,7 @@ public class OpeningScroll : MonoBehaviour {
         print(start);
         end = new Vector2(start.x, Screen.height + 50);
         words = GetComponent<Text>();
+        words.text = openingWords[index++];
     }
 	
 	// Update is called once per frame
@@ -27,12 +30,17 @@ public class OpeningScroll : MonoBehaviour {
             crawling = true;
             textToDisappear.enabled = false;
         }
-        print(crawling);
         if (!crawling)
             return;
-        position.Translate(Vector3.up * Time.deltaTime * 200);
-        if (position.position.y > 550) {
-            position.transform.position = start;
+        position.Translate(Vector3.up * Time.deltaTime * 100);
+        if (position.position.y > 850) {
+            if (index == openingWords.Length) {
+                SceneManager.LoadScene("Main Scene");
+            }
+            else {
+                position.anchoredPosition = start;
+                words.text = openingWords[index++];
+            }            
         }
     }
 }
