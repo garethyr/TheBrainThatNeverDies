@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class GameController : MonoBehaviour {
-    public Transform WomanTransform;
-    public Transform AlienTransform;
+    public Woman WomanTransform;
+    public Alien AlienTransform;
 
     public Transform FemaleSpawnPoint;
 
@@ -11,17 +11,17 @@ public class GameController : MonoBehaviour {
     public int MaxFemales;
     public float SpawnCooldown;
 
-    private Transform[] females;
+    private Female[] females;
 
 
-	// Use this for initialization
-	void Start () {
-        females = new Transform[MaxFemales];
+    // Use this for initialization
+    void Start () {
+        females = new Female[MaxFemales];
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (SpawnCooldown > 0) {
+        if (SpawnCooldown > 0 && females.Length < MaxFemales) {
             SpawnCooldown--;
         } else {
             doSpawn();
@@ -29,11 +29,12 @@ public class GameController : MonoBehaviour {
 	}
 
     void doSpawn() {
-        
-
-
         if (Random.value < AlienChance) {
-
+            Alien newAlien = Instantiate<Alien>((Alien)AlienTransform);
+            newAlien.transform.position = FemaleSpawnPoint.position;
+        } else {
+            Woman newWoman = Instantiate<Woman>((Woman)WomanTransform);
+            newWoman.transform.position = FemaleSpawnPoint.position;
         }
     }
 }
