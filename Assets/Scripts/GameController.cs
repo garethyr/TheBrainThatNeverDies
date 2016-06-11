@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour {
             if (females.Count < MaxFemales) {
                 spawnFemale();
             }
-            spawnCooled = SpawnCooldown;
+            spawnCooled = SpawnCooldown - Random.Range(0, SpawnCooldown) + Random.Range(0, SpawnCooldown);
         }
     }
 
