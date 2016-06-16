@@ -56,9 +56,9 @@ public class GameController : MonoBehaviour {
             return;
         }
 
-        Lives.text = "Lives: " + playerLivesLeft;
-        WomanPercent.text = "Woman Percent: " + (100 * womanCount / MaxWomanCount);
-        AlienPercent.text = "Bad Alien Percent: " + (100 * alienCount / MaxAlienCount);
+        //Lives.text = "Lives: " + playerLivesLeft;
+        //WomanPercent.text = "Woman Percent: " + (100 * womanCount / MaxWomanCount);
+        //AlienPercent.text = "Bad Alien Percent: " + (100 * alienCount / MaxAlienCount);
 
         doSpawning();
         doDespawning();
